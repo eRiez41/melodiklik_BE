@@ -29,3 +29,18 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 });
 
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->post('register', 'AuthController@register');
+    $router->post('login', 'AuthController@login');
+    
+    $router->group(['middleware' => 'auth'], function () use ($router) {
+        // Rute untuk CRUD produk
+        $router->get('products', 'ProductController@index');
+        $router->get('products/{id}', 'ProductController@show');
+        $router->post('products', 'ProductController@store');
+        $router->put('products/{id}', 'ProductController@update');
+        $router->delete('products/{id}', 'ProductController@destroy');
+    });
+});
+
+
